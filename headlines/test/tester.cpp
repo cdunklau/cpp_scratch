@@ -33,10 +33,8 @@ int test_curlpp() {
         xmlpp::Element* rootElement = document->get_root_node();
         xmlpp::NodeSet headlineNodes = rootElement->find(headlinesXpath);
 
-        
-
         for (xmlpp::Node* node : headlineNodes) {
-            xmlpp::TextNode *headline = dynamic_cast<xmlpp::TextNode*>(node);
+            xmlpp::TextNode* headline = dynamic_cast<xmlpp::TextNode*>(node);
             std::cout << "Title: " << headline->get_content() << std::endl;
         }
 
