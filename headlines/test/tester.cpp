@@ -35,10 +35,8 @@ int test_curlpp() {
 
         
 
-        for (xmlpp::NodeSet::iterator i = headlineNodes.begin();
-                i != headlineNodes.end();
-                i++) {
-            xmlpp::TextNode *headline = dynamic_cast<xmlpp::TextNode*>(*i);
+        for (xmlpp::Node* node : headlineNodes) {
+            xmlpp::TextNode *headline = dynamic_cast<xmlpp::TextNode*>(node);
             std::cout << "Title: " << headline->get_content() << std::endl;
         }
 
