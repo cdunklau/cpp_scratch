@@ -12,11 +12,11 @@ extern "C" {
 HTTPClient::HTTPClient() {
     int res = curl_global_init(CURL_GLOBAL_ALL);
     if (res != 0) {
-        throw CurlInitializationFailed("curl_global_init returned nonzero");
+        throw CurlGlobalInitFailed();
     }
     curl = curl_easy_init();
     if (!curl) {
-        throw CurlInitializationFailed("curl_easy_init failed");
+        throw CurlHandleInitFailed();
     }
 }
 
@@ -31,10 +31,18 @@ void HTTPClient::retrieve(std::string urlString) {
     char errorBuffer[CURL_ERROR_SIZE];
     errorBuffer[0] = 0;
     curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errorBuffer);
-    curl_easy_setopt(curl, CURLOPT_URL, urlString);
+    curl_easy_setopt(curl, CURLOPT_URL, urlString.c_str());
     res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
-        string errorString(errorBuffer);
+        const std::string errorString(errorBuffer);
         throw RequestFailed(errorString);
     }
+}
+
+const char* CurlGlobalInitFailed::what() const noexcept {
+    return "curl_global_init returned nonzero";
+}
+
+const char* CurlHandleInitFailed::what() const noexcept {
+    return "curl_easy_init failed";
 }
