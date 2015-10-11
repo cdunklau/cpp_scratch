@@ -1,0 +1,41 @@
+ g++  -g -Wall  -lxml++-2.6 -lxml2 -lglibmm-2.4 -lgobject-2.0 -lglib-2.0 -lsigc-2.0  -I include -c -o build/main.o src/main.cpp
+In file included from /usr/include/c++/4.9/iostream:40:0,
+                 from src/main.cpp:2:
+/usr/include/c++/4.9/istream: In function ‘int main()’:
+/usr/include/c++/4.9/istream:830:7: error: ‘std::basic_iostream<_CharT, _Traits>::basic_iostream() [with _CharT = char; _Traits = std::char_traits<char>]’ is protected
+       basic_iostream()
+       ^
+src/main.cpp:19:19: error: within this context
+     std::iostream feedStream;
+                   ^
+In file included from /usr/include/c++/4.9/ios:42:0,
+                 from /usr/include/c++/4.9/ostream:38,
+                 from /usr/include/c++/4.9/iostream:39,
+                 from src/main.cpp:2:
+/usr/include/c++/4.9/bits/ios_base.h: In member function ‘std::basic_ios<char>& std::basic_ios<char>::operator=(const std::basic_ios<char>&)’:
+/usr/include/c++/4.9/bits/ios_base.h:789:5: error: ‘std::ios_base& std::ios_base::operator=(const std::ios_base&)’ is private
+     operator=(const ios_base&);
+     ^
+In file included from /usr/include/c++/4.9/ios:44:0,
+                 from /usr/include/c++/4.9/ostream:38,
+                 from /usr/include/c++/4.9/iostream:39,
+                 from src/main.cpp:2:
+/usr/include/c++/4.9/bits/basic_ios.h:66:11: error: within this context
+     class basic_ios : public ios_base
+           ^
+In file included from /usr/include/c++/4.9/iostream:40:0,
+                 from src/main.cpp:2:
+/usr/include/c++/4.9/istream: In member function ‘std::basic_istream<char>& std::basic_istream<char>::operator=(const std::basic_istream<char>&)’:
+/usr/include/c++/4.9/istream:58:11: note: synthesized method ‘std::basic_ios<char>& std::basic_ios<char>::operator=(const std::basic_ios<char>&)’ first required here 
+     class basic_istream : virtual public basic_ios<_CharT, _Traits>
+           ^
+/usr/include/c++/4.9/istream: In member function ‘std::basic_iostream<char>& std::basic_iostream<char>::operator=(const std::basic_iostream<char>&)’:
+/usr/include/c++/4.9/istream:795:11: note: synthesized method ‘std::basic_istream<char>& std::basic_istream<char>::operator=(const std::basic_istream<char>&)’ first required here 
+     class basic_iostream
+           ^
+src/main.cpp: In function ‘int main()’:
+src/main.cpp:21:20: note: synthesized method ‘std::basic_iostream<char>& std::basic_iostream<char>::operator=(const std::basic_iostream<char>&)’ first required here 
+         feedStream = client.retrieve(feedURL);
+                    ^
+Makefile:27: recipe for target 'build/main.o' failed
+make: *** [build/main.o] Error 1

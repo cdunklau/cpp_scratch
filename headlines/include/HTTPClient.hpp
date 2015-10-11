@@ -18,7 +18,8 @@ class HTTPClient {
         CURL *curl;
 };
 
-class RequestFailed : public std::runtime_error {};
-class CurlInitializationFailed : public std::runtime_error {};
+class RequestFailed : public std::exception {};
+class CurlGlobalInitFailed : public std::exception {};
+class CurlHandleInitFailed : public std::exception {};
 
 #endif

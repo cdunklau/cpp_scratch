@@ -7,6 +7,7 @@
 
 
 int main() {
+    /**
     HTTPClient client;
     try {
         client = HTTPClient();
@@ -23,5 +24,6 @@ int main() {
         std::cerr << "ERROR: Request failed: " << failure.what() << std::endl;
         return EXIT_FAILURE;
     }
+    */
     return EXIT_SUCCESS;
 }
