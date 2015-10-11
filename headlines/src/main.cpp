@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include <istream>
+#include <sstream>
 #include <cstdlib>
 #include <vector>
 
@@ -25,15 +25,15 @@ const std::string BBC_XPATH = "/rss/channel/item/title/text()";
 
 std::vector<FeedInfo> feeds = {
     {
+        "BBC World News",
+        "http://feeds.bbci.co.uk/news/world/rss.xml",
+        BBC_XPATH
+    },
+    {
         "BBC Top Stories",
         "http://feeds.bbci.co.uk/news/rss.xml",
         BBC_XPATH
     },
-    {
-        "BBC World News",
-        "http://feeds.bbci.co.uk/news/world/rss.xml",
-        BBC_XPATH
-    }
 };
 
 // Put the body of the URL into the stream
