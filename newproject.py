@@ -11,7 +11,9 @@ def main():
     prog, project = sys.argv
     for d in subdirs:
         os.makedirs(os.path.join(project, d))
-    shutil.copy('Makefile.template', os.path.join(project, 'Makefile'))
+    makefile = os.path.join(project, 'Makefile')
+    if not os.path.exists(makefile):
+        shutil.copy('Makefile.template', makefile)
 
 
 if __name__ == '__main__':
