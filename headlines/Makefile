@@ -12,10 +12,10 @@ SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 CFLAGS := \
 	-g -Wall -Werror -std=c++11 \
-	$(shell curl-config --cflags) \
+	$(shell pkg-config curlpp --cflags) \
 	$(shell pkg-config libxml++-2.6 --cflags)
 LIB := \
-	$(shell curl-config --libs) \
+	$(shell pkg-config curlpp --libs) \
 	$(shell pkg-config libxml++-2.6 --libs)
 INC := -I include
 

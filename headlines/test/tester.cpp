@@ -1,28 +1,38 @@
-#include <istream>
 #include <iostream>
+#include <sstream>
 #include <cstdlib>
+#include <string>
 
-extern "C" {
-#include <curl/curl.h>
-}
+#include <curlpp/cURLpp.hpp>
+#include <curlpp/Easy.hpp>
+#include <curlpp/Options.hpp>
+#include <libxml++/libxml++.h>
 
-#include <HTTPClient.hpp>
 
-
-int test_httpclient() {
-    HTTPClient client;
+int test_curlpp() {
     try {
-        client = HTTPClient();
-    } catch (CurlInitializationFailed &failure) {
-        std::cerr
-            << "ERROR: Initialization failed: " << failure.what() << std::endl;
+        std::string feedAddress = "http://feeds.bbci.co.uk/news/world/rss.xml";
+        std::stringstream xmlStream;
+
+        curlpp::Cleanup cleanup;
+        curlpp::Easy request;
+
+        xmlpp::DomParser parser;
+
+        curlpp::options::Url feedUrl(feedAddress);
+        curlpp::options::WriteStream writeStream(&xmlStream);
+
+        request.setOpt(feedUrl);
+        request.setOpt(writeStream);
+        request.perform();
+
+        parser.parse_stream(xmlStream);
+
+    } catch (curlpp::RuntimeError &e) {
+        std::cerr << e.what() << std::endl;
         return 1;
-    }
-    std::string feedURL = "http://feeds.bbci.co.uk/news/world/rss.xml";
-    try {
-        client.retrieve(feedURL);
-    } catch (RequestFailed& failure) {
-        std::cerr << "ERROR: Request failed: " << failure.what() << std::endl;
+    } catch (curlpp::LogicError &e) {
+        std::cerr << e.what() << std::endl;
         return 1;
     }
     return 0;
@@ -30,7 +40,7 @@ int test_httpclient() {
 
 
 int main() {
-    if (test_httpclient() != 0) {
+    if (test_curlpp() != 0) {
         return EXIT_FAILURE;
     }
     return EXIT_SUCCESS;
