@@ -11,7 +11,7 @@ SRCEXT := cpp
 SOURCES := $(shell find $(SRCDIR) -type f -name *.$(SRCEXT))
 OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 CFLAGS := \
-	-g -Wall -Werror -std=c++11 \
+	-g -Wall -Werror -Wextra -std=c++11 \
 	$(shell pkg-config curlpp --cflags) \
 	$(shell pkg-config libxml++-2.6 --cflags)
 LIB := \

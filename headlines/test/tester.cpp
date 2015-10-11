@@ -35,7 +35,11 @@ int test_curlpp() {
 
         for (xmlpp::Node* node : headlineNodes) {
             xmlpp::TextNode* headline = dynamic_cast<xmlpp::TextNode*>(node);
-            std::cout << "Title: " << headline->get_content() << std::endl;
+            if (headline != NULL) {
+                std::cout << "Title: " << headline->get_content() << std::endl;
+            } else {
+                std::cerr << "Couldn't cast to xmlpp::TextNode" << std::endl;
+            }
         }
 
     } catch (curlpp::RuntimeError &e) {
