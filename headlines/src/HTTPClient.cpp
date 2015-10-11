@@ -18,20 +18,20 @@ HTTPClient::HTTPClient() {
     if (!curl) {
         throw CurlInitializationFailed("curl_easy_init failed");
     }
-    curl_global_cleanup();
 }
 
 HTTPClient::~HTTPClient() {
     curl_easy_cleanup(curl);
+    curl_global_cleanup();
 }
 
 
-std::iostream HTTPClient::retrieve(std::string urlString) {
+void HTTPClient::retrieve(std::string urlString) {
     CURLcode res;
     char errorBuffer[CURL_ERROR_SIZE];
     errorBuffer[0] = 0;
-    curl_easy_setopt(curl, CURLOPT_URL, urlString);
     curl_easy_setopt(curl, CURLOPT_ERRORBUFFER, errorBuffer);
+    curl_easy_setopt(curl, CURLOPT_URL, urlString);
     res = curl_easy_perform(curl);
     if (res != CURLE_OK) {
         string errorString(errorBuffer);

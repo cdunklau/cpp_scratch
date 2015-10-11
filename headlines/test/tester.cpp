@@ -1,5 +1,6 @@
 #include <istream>
 #include <iostream>
+#include <cstdlib>
 
 extern "C" {
 #include <curl/curl.h>
@@ -8,20 +9,29 @@ extern "C" {
 #include <HTTPClient.hpp>
 
 
-void test_httpclient() {
-    curl_global_init(CURL_GLOBAL_ALL);
-    CURL *curl = curl_easy_init();
-    if (curl) {
-        std::string url = "http://httpbin.org/headers";
-        HTTPClient client(curl);
-        std::iostream body = client.retrieve(url);
-    } else {
-        std::cerr << "Failed to initialize curl!";
+int test_httpclient() {
+    HTTPClient client;
+    try {
+        client = HTTPClient();
+    } catch (CurlInitializationFailed &failure) {
+        std::cerr
+            << "ERROR: Initialization failed: " << failure.what() << std::endl;
+        return 1;
     }
-    curl_global_cleanup();
+    std::string feedURL = "http://feeds.bbci.co.uk/news/world/rss.xml";
+    try {
+        client.retrieve(feedURL);
+    } catch (RequestFailed& failure) {
+        std::cerr << "ERROR: Request failed: " << failure.what() << std::endl;
+        return 1;
+    }
+    return 0;
 }
 
 
 int main() {
-    return 0;
+    if (test_httpclient() != 0) {
+        return EXIT_FAILURE;
+    }
+    return EXIT_SUCCESS;
 }

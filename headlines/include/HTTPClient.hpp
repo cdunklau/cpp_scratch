@@ -13,7 +13,7 @@ class HTTPClient {
     public:
         HTTPClient();
         ~HTTPClient();
-        std::iostream retrieve(std::string urlString);
+        void retrieve(std::string urlString);
     private:
         CURL *curl;
 };
